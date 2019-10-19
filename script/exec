@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+export BUILD_DIRECTORY="./.build-temp"
+npx truffle exec $@

@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "console": "./script/console",
+    "exec": "./script/exec",
     "coverage": "./script/coverage",
     "deploy": "./scenario/script/repl -s ./script/scen/deploy.scen",
     "lint": "./script/lint",
     "repl": "./scenario/script/repl",
     "scenario": "./script/scenario",
     "ganache": "./script/ganache",
+    "deployAndRun": "rm networks/development* && npm run deploy && npm run console",
     "test": "./script/test"
   },
   "repository": "git@github.com:compound-finance/compound-protocol.git",
