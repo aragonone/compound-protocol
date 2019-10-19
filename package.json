@@ -10,6 +10,7 @@
     "lint": "./script/lint",
     "repl": "./scenario/script/repl",
     "scenario": "./script/scenario",
+    "ganache": "./script/ganache",
     "test": "./script/test"
   },
   "repository": "git@github.com:compound-finance/compound-protocol.git",
