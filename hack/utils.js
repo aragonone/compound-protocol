@@ -1,5 +1,9 @@
 module.exports = (web3, artifacts) => {
   const Utils = {
+    processArgs: function() {
+      return process.argv.slice(4, process.argv.length)
+    },
+
     getAccounts: async function() {
       const accounts = await web3.eth.getAccounts();
 
@@ -17,6 +21,21 @@ module.exports = (web3, artifacts) => {
       }
     },
 
+    getAddressForAccount: async function(account) {
+      const accounts = await Utils.getAccounts()
+      const address = accounts[account]
+      if (!address) {
+        console.log(`ERROR: Unrecognized account '${account}'`)
+        process.exit()
+      }
+      console.log(`\nAccount:`)
+      console.log(`  ${account}`)
+      console.log(`  address: ${address}`)
+      console.log(`  wallet: ${await Utils.getBalanceInEther(address)} ETH`)
+
+      return address
+    },
+
     getContracts: async function() {
       const ceth = await artifacts.require('cETH').deployed()
       const cdai = await artifacts.require('cDAI').deployed()
@@ -27,6 +46,33 @@ module.exports = (web3, artifacts) => {
         cdai,
         comp
       }
+    },
+
+    getTokenContract: async function(ctoken) {
+      const contracts = await Utils.getContracts()
+      const token = contracts[ctoken]
+      if (!token) {
+        console.log(`ERROR: Unrecognized ctoken '${ctoken}'`)
+        process.exit()
+      }
+      console.log(`\nCToken:`)
+      console.log(`  name: ${ctoken}`)
+      console.log(`  address: ${token.address}`)
+
+      return token
+    },
+
+    getAmountInSmallestDenomination: function(amount) {
+      if (isNaN(amount)) {
+        console.log(`ERROR: Invalid amount '${amount}'`)
+        process.exit()
+      }
+      console.log(`\nAmount to supply:`)
+      console.log(`  ${amount} tokens`)
+      const expandedAmount = Utils.etherToWei(amount)
+      console.log(`  ${expandedAmount} wei`)
+
+      return expandedAmount
     },
 
     etherToWei: function(ether) {
