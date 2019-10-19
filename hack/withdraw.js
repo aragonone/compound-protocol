@@ -44,7 +44,8 @@ async function main() {
 
   // Redeem tokens.
   console.log(`\nRedeeming...`)
-  await token.redeemUnderlying(amountToWithdraw, { from: address })
+  const tx = await token.redeemUnderlying(amountToWithdraw, { from: address })
+  console.log(`tx`, JSON.stringify(tx, null, 2))
 
   // Verify balances.
   console.log(`\nVerifying balances:`)

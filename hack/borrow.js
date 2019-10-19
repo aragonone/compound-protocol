@@ -45,7 +45,8 @@ async function main() {
 
   // Redeem tokens.
   console.log(`\nBorrowing...`)
-  await token.borrow(amountToBorrow, { from: address })
+  const tx = await token.borrow(amountToBorrow, { from: address })
+  console.log(`tx`, JSON.stringify(tx, null, 2))
 
   // Verify balances.
   console.log(`\nVerifying balances:`)

@@ -38,19 +38,26 @@ async function main() {
     process.exit()
   }
   console.log(`\nAmount to supply:`)
-  console.log(`  ${amount} ETH`)
+  console.log(`  ${amount} Tokens`)
   const amountToSupply = utils.etherToWei(amount)
   console.log(`  ${amountToSupply} Wei`)
 
   // Approve and mint.
   console.log(`\nApproving and minting...`)
-  await token.approve(token.address, amountToSupply, { from: address })
-  await token.mint({ value: amountToSupply, from: address })
+  let tx
+  if (ctoken === 'ceth') {
+    console.log(`minting ceth`)
+    tx = await token.mint({ value: amountToSupply, from: address })
+  } else {
+    await token.approve(token.address, amountToSupply, { from: address })
+    tx = await token.mint(amountToSupply, { from: address })
+  }
+  console.log(`tx`, JSON.stringify(tx, null, 2))
 
   // Verify balances.
   console.log(`\nVerifying balances:`)
   console.log(`  wallet: ${await utils.getBalanceInEther(address)} ETH`)
-  console.log(`  supplied balance: ${await utils.getSuppliedBalance(token, address)} ETH`)
+  console.log(`  supplied balance: ${await utils.getSuppliedBalance(token, address)} Tokens`)
 }
 
 // Required by `truffle exec`.
