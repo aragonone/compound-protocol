@@ -17,11 +17,6 @@ async function main() {
     tx = await token.mint(amountToSupply, { from: address })
   }
   console.log(`tx`, JSON.stringify(tx, null, 2))
-
-  // Verify balances.
-  console.log(`\nVerifying balances:`)
-  console.log(`  wallet: ${await utils.getBalanceInEther(address)} ETH`)
-  console.log(`  supplied balance: ${await utils.getSuppliedBalance(token, address)} Tokens`)
 }
 
 // Required by `truffle exec`.

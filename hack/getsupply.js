@@ -1,16 +1,13 @@
 const utils = require('./utils')(web3, artifacts)
-const ERC20 = artifacts.require('DAI')
 
 async function main() {
-  const [ctoken, account, amount] = utils.processArgs()
+  const [ctoken, account] = utils.processArgs()
   const address = await utils.getAddressForAccount(account)
   const token = await utils.getTokenContract(ctoken)
-  const amountToBorrow = utils.getAmountInSmallestDenomination(amount)
 
-  // Redeem tokens.
-  console.log(`\nBorrowing...`)
-  const tx = await token.borrow(amountToBorrow, { from: address })
-  console.log(`tx`, JSON.stringify(tx, null, 2))
+  const suppliedBalance = await utils.getSuppliedBalance(token, address)
+  console.log(`\nSupplied balance`)
+  console.log(`  ${suppliedBalance} Tokens`)
 }
 
 // Required by `truffle exec`.

@@ -37,14 +37,9 @@ module.exports = (web3, artifacts) => {
     },
 
     getContracts: async function() {
-      const ceth = await artifacts.require('cETH').deployed()
-      const cdai = await artifacts.require('cDAI').deployed()
-      const comp = await artifacts.require('Comptroller').deployed()
-
       return {
-        ceth,
-        cdai,
-        comp
+        ceth: await artifacts.require('cETH').deployed(),
+        cdai: await artifacts.require('cDAI').deployed(),
       }
     },
 
